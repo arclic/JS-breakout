@@ -1,4 +1,6 @@
 import { Block } from "./block.js";
+import { Bar } from "./bar.js";
+import { Ball } from "./ball.js";
 
 class App{
     constructor(){
@@ -15,6 +17,25 @@ class App{
             }
         }
 
+        this.bar = new Bar(100, this.canvas.width, this.canvas.height);
+
+        this.ball = new Ball(10, this.canvas.width, this.canvas.height, this.bar, this.blocks);
+
+        const moveSpeed = 10;
+
+        window.addEventListener('keydown', (e) => {
+            // 오른쪽
+            if(e.key === "ArrowRight"){ this.bar.vx = moveSpeed; }
+            // 왼쪽
+            if(e.key === "ArrowLeft"){ this.bar.vx = -moveSpeed; }
+            // 스페이스바
+            if(e.key == " "){ this.ball.isGameStart = true; }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if(e.key === "ArrowRight" || e.key == "ArrowLeft"){ this.bar.vx = 0; }
+        });
+
         window.requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -22,9 +43,9 @@ class App{
         this.ctx.fillStyle = "#102330";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.blocks.forEach((block) => {
-            block.draw(this.ctx);
-        });
+        this.bar.draw(this.ctx);
+
+        this.ball.draw(this.ctx);
     }
 
     animate(){
