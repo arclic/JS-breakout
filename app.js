@@ -11,6 +11,7 @@ class App{
         const blockHeight = 20;
         
         this.blocks = [];
+
         for(let i = 0; i <= this.canvas.width - blockWidth; i += blockWidth){
             for(let j = 50; j <= 200; j += blockHeight){
                 this.blocks.push(new Block(i, j));
